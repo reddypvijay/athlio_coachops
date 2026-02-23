@@ -9,6 +9,7 @@ const NAV = [
     { to: '/paid-holidays', icon: '📅', label: 'Paid Holidays' },
     { to: '/attendance', icon: '✅', label: 'Attendance' },
     { to: '/payroll', icon: '💰', label: 'Payroll' },
+    { to: '/payments', icon: '💳', label: 'Payments' },
     { to: '/attendance-export', icon: '📊', label: 'Attendance Export' },
     { to: '/substitutes', icon: '🔄', label: 'Substitute Coaches' },
 ]

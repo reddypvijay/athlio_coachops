@@ -14,6 +14,7 @@ import Payroll from './pages/Payroll'
 import Substitutes from './pages/Substitutes'
 import Sports from './pages/Sports'
 import AttendanceExport from './pages/AttendanceExport'
+import Payments from './pages/Payments'
 
 function App() {
     const { loading } = useAuth()
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/substitutes" element={<Substitutes />} />
                     <Route path="/sports" element={<Sports />} />
                     <Route path="/attendance-export" element={<AttendanceExport />} />
+                    <Route path="/payments" element={<Payments />} />
                 </Route>
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
