@@ -309,11 +309,7 @@ export default function AttendanceExport() {
                     <h1 className="page-title">Attendance Export</h1>
                     <p className="page-subtitle">Generate monthly muster roll sheets for any community.</p>
                 </div>
-                {rows.length > 0 && (
-                    <button className="btn btn-primary" onClick={generateExcel} disabled={generating}>
-                        {generating ? 'Generating…' : '⬇ Download Excel'}
-                    </button>
-                )}
+
             </div>
 
             <div className="page-body">
