@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../../lib/supabase'
+import { useCommunities } from '../../hooks/useCommunities'
 import { getMonthName, formatCurrency } from '../../utils/dateUtils'
 import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
@@ -13,15 +14,18 @@ export default function Payroll() {
 
     const [month, setMonth] = useState(currentMonth)
     const [year, setYear] = useState(currentYear)
+    const [selectedCommunity, setSelectedCommunity] = useState('')   // '' = All Communities
     const [hasCalculated, setHasCalculated] = useState(false)
 
+    const { data: communities = [] } = useCommunities()
+
     const { data: payrollData = [], isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: ['payroll', month, year],
+        queryKey: ['payroll', month, year, selectedCommunity],
         queryFn: async () => {
             console.log('[Payroll] Fetching attendance for month=%d year=%d', month, year)
 
             // Step 1: Fetch attendance records for the month
-            const { data: records, error: recErr } = await supabase
+            let query = supabase
                 .from('monthly_attendance')
                 .select(`
                     *,
@@ -30,6 +34,12 @@ export default function Payroll() {
                 `)
                 .eq('month', month)
                 .eq('year', year)
+
+            if (selectedCommunity) {
+                query = query.eq('community_id', selectedCommunity)
+            }
+
+            const { data: records, error: recErr } = await query
 
             if (recErr) {
                 console.error('[Payroll] attendance query error:', recErr)
@@ -138,6 +148,11 @@ export default function Payroll() {
         setHasCalculated(false)
     }
 
+    function handleCommunityChange(val) {
+        setSelectedCommunity(val)
+        setHasCalculated(false)
+    }
+
     function exportExcel() {
         const rows = []
         for (const entry of payrollData) {
@@ -162,7 +177,10 @@ export default function Payroll() {
         const ws = XLSX.utils.json_to_sheet(rows)
         const wb = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(wb, ws, `Payroll ${getMonthName(month)} ${year}`)
-        XLSX.writeFile(wb, `CoachOps_Payroll_${getMonthName(month)}_${year}.xlsx`)
+        const communityLabel = selectedCommunity
+            ? communities.find(c => c.id === selectedCommunity)?.name?.replace(/\s+/g, '_') || 'Community'
+            : 'All'
+        XLSX.writeFile(wb, `Athlio_CoachOps_Payroll_${communityLabel}_${getMonthName(month)}_${year}.xlsx`)
     }
 
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -194,6 +212,13 @@ export default function Payroll() {
                             <label className="input-label">Year</label>
                             <select className="select" value={year} onChange={e => handleYearChange(Number(e.target.value))}>
                                 {[2026, 2027, 2028].map(y => <option key={y} value={y}>{y}</option>)}
+                            </select>
+                        </div>
+                        <div className="input-group" style={{ flex: '1 1 200px' }}>
+                            <label className="input-label">Community</label>
+                            <select className="select" value={selectedCommunity} onChange={e => handleCommunityChange(e.target.value)}>
+                                <option value="">— All Communities —</option>
+                                {communities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                         <div style={{ paddingBottom: '2px' }}>
@@ -283,6 +308,47 @@ export default function Payroll() {
                         </div>
                     </Card>
                 ))}
+
+                {/* Summary footer — only when results are present */}
+                {payrollData.length > 0 && (() => {
+                    const grandTotal = payrollData.reduce((sum, e) => sum + e.totalSalary, 0)
+                    const communityName = selectedCommunity
+                        ? communities.find(c => c.id === selectedCommunity)?.name
+                        : 'All Communities'
+                    return (
+                        <div style={{
+                            position: 'sticky',
+                            bottom: 0,
+                            marginTop: 24,
+                            background: 'var(--surface)',
+                            border: '1px solid var(--border-2)',
+                            borderRadius: 'var(--radius-lg)',
+                            padding: '18px 28px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: 16,
+                            boxShadow: '0 -4px 24px rgba(0,0,0,0.08)',
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+                                <div>
+                                    <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 2 }}>Coaches</div>
+                                    <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)' }}>{payrollData.length}</div>
+                                </div>
+                                <div style={{ width: 1, height: 36, background: 'var(--border-2)' }} />
+                                <div>
+                                    <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 2 }}>Scope</div>
+                                    <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>{communityName} · {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month - 1]} {year}</div>
+                                </div>
+                            </div>
+                            <div style={{ textAlign: 'right' }}>
+                                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 2 }}>Total Payout</div>
+                                <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '1.8rem', fontWeight: 700, color: 'var(--primary)' }}>{formatCurrency(grandTotal)}</div>
+                            </div>
+                        </div>
+                    )
+                })()}
             </div>
         </>
     )

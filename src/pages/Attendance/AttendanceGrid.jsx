@@ -269,10 +269,10 @@ export default function AttendanceGrid({ coachId, sportId, communityId, sport, m
                                 opacity: locked ? 0.25 : editable ? 1 : 0.6,
                                 background: locked ? 'transparent'
                                     : code === 'P' ? 'var(--surface)'
-                                        : code === 'HD' ? 'rgba(251,146,60,0.15)'
-                                            : code === 'A' ? 'rgba(248,113,113,0.15)'
-                                                : code === 'SUB' ? 'rgba(251,191,36,0.15)'
-                                                    : code === 'PH' ? 'rgba(232,255,71,0.1)'
+                                        : code === 'HD' ? 'rgba(234,88,12,0.10)'
+                                            : code === 'A' ? 'rgba(220,38,38,0.10)'
+                                                : code === 'SUB' ? 'rgba(217,119,6,0.10)'
+                                                    : code === 'PH' ? 'rgba(37,99,235,0.08)'
                                                         : 'var(--surface)',
                                 transition: 'all 0.15s',
                             }}
@@ -300,7 +300,7 @@ export default function AttendanceGrid({ coachId, sportId, communityId, sport, m
                 <div style={{
                     display: 'flex', alignItems: 'center', gap: 10,
                     padding: '10px 18px', borderRadius: 8, marginBottom: 12,
-                    background: 'rgba(34,197,94,0.15)', border: '1px solid var(--success)',
+                    background: 'rgba(22,163,74,0.10)', border: '1px solid var(--success)',
                     color: 'var(--success)', fontWeight: 600, fontSize: '0.9rem',
                     animation: 'slideInFade 0.3s ease',
                 }}>

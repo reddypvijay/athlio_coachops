@@ -21,7 +21,7 @@ export default function AppLayout() {
         <div className="app-shell">
             <aside className="sidebar">
                 <div className="sidebar-logo">
-                    <div className="sidebar-logo-text">COACHOPS</div>
+                    <div className="sidebar-logo-text">ATHLIO COACHOPS</div>
                     <div className="sidebar-logo-sub">Management System</div>
                 </div>
 

@@ -41,7 +41,7 @@ export default function Login() {
                 {/* Logo */}
                 <div style={{ textAlign: 'center', marginBottom: '40px' }}>
                     <div style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', color: 'var(--primary)', letterSpacing: '0.08em', lineHeight: 1 }}>
-                        COACHOPS
+                        ATHLIO COACHOPS
                     </div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                         Management System
@@ -52,7 +52,7 @@ export default function Login() {
                 <div className="card" style={{ border: '1px solid var(--border-2)' }}>
                     <div style={{ marginBottom: '24px' }}>
                         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '4px' }}>Sign In</h2>
-                        <p className="text-muted text-sm">Access your CoachOps dashboard</p>
+                        <p className="text-muted text-sm">Access your Athlio CoachOps dashboard</p>
                     </div>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -113,7 +113,7 @@ export default function Login() {
                 </div>
 
                 <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                    CoachOps v1.0 · Secured with Supabase Auth
+                    Athlio CoachOps v1.0 · Secured with Supabase Auth
                 </p>
             </div>
         </div>

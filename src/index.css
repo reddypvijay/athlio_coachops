@@ -5,22 +5,22 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  /* Colors */
-  --bg: #0a0a0a;
-  --surface: #181c24;
-  --surface-2: #1e2330;
-  --border: #252a35;
-  --border-2: #2e3444;
-  --text: #f0f2f8;
-  --text-muted: #6b7280;
-  --primary: #e8ff47;
-  --primary-dim: #b8cc30;
-  --accent: #ff6b35;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --warning-amber: #fb923c;
-  --danger: #f87171;
-  --info: #60a5fa;
+  /* Colors — Light Theme */
+  --bg: #f0f2f8;
+  --surface: #ffffff;
+  --surface-2: #f5f7fc;
+  --border: #e2e8f0;
+  --border-2: #cbd5e1;
+  --text: #1a202c;
+  --text-muted: #64748b;
+  --primary: #2563eb;
+  --primary-dim: #1d4ed8;
+  --accent: #f97316;
+  --success: #16a34a;
+  --warning: #d97706;
+  --warning-amber: #ea580c;
+  --danger: #dc2626;
+  --info: #0284c7;
 
   /* Typography */
   --font-body: 'DM Sans', system-ui, sans-serif;
@@ -138,13 +138,13 @@ pre,
 
 .btn-primary {
   background: var(--primary);
-  color: #0a0a0a;
+  color: #ffffff;
 }
 
 .btn-primary:hover:not(:disabled) {
   background: var(--primary-dim);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(232, 255, 71, 0.25);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 }
 
 .btn-secondary {
@@ -243,7 +243,7 @@ pre,
 .select:focus,
 .textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(232, 255, 71, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .input.error,
@@ -347,7 +347,7 @@ pre,
 }
 
 .badge-primary {
-  background: rgba(232, 255, 71, 0.12);
+  background: rgba(37, 99, 235, 0.10);
   color: var(--primary);
 }
 
@@ -403,7 +403,7 @@ tbody td {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(15, 23, 42, 0.55);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -521,13 +521,13 @@ tbody td {
 
 .nav-link:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(37, 99, 235, 0.06);
   border-left-color: var(--border-2);
 }
 
 .nav-link.active {
   color: var(--primary);
-  background: rgba(232, 255, 71, 0.06);
+  background: rgba(37, 99, 235, 0.08);
   border-left-color: var(--primary);
 }
 
@@ -555,7 +555,7 @@ tbody td {
   height: 32px;
   border-radius: 50%;
   background: var(--primary);
-  color: #0a0a0a;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

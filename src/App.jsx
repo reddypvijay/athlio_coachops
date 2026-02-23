@@ -22,7 +22,7 @@ function App() {
         return (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', gap: '12px', color: 'var(--text-muted)' }}>
                 <div className="spinner" />
-                <span>Loading CoachOps…</span>
+                <span>Loading Athlio CoachOps…</span>
             </div>
         )
     }
